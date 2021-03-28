@@ -2,7 +2,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.concurrent.TimeUnit;
 
 public class GiftScreen {
 
@@ -16,12 +15,13 @@ public class GiftScreen {
 
     public static void EnterAmount(WebDriver driver) {
 
-        element = driver.findElement(By.cssSelector("input[placeholder='הכנס סכום']"));
+        element=driver.findElement(By.cssSelector("input[placeholder='הכנס סכום']"));
+        //element.click();
         element.sendKeys("500");
     }
 
     public static void pressSubmit(WebDriver driver){
-        element = driver.findElement(By.cssSelector("button[gtm='בחירה']"));
+        element = driver.findElement(By.cssSelector("div>button[type='submit']:nth-child(1)"));
         element.click();
 
     }

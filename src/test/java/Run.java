@@ -7,7 +7,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.rules.TestName;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -28,7 +28,7 @@ public class Run {
     private static ExtentReports extent;
     private static ExtentTest test;
     public TestName name = new TestName();
-    private static WebElement element = null;
+    //private static WebElement element = null;
 
     @BeforeClass
     public void runBefore(){
@@ -66,12 +66,10 @@ public class Run {
     }
 
     private static String getData (String keyName) throws IOException, SAXException, ParserConfigurationException {
-        File configXmlFile = new File("C:\\Users\\Alex\\IdeaProjects\\BuyMe\\src\\main\\resources\\data.xml");
+        File configXmlFile = new File("src\\main\\resources\\data.xml");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(configXmlFile);
-
         if (doc != null) {
             doc.getDocumentElement().normalize();
         }
@@ -103,7 +101,7 @@ public class Run {
         }
         test.pass("Registration page with credentials",
                 MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.png"
+                        ("\\.jpg"
                                 + name.getMethodName())).build());
     }
 
@@ -131,7 +129,7 @@ public class Run {
         }
         test.pass("Registration page with credentials",
                 MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.png"
+                        ("\\.jpg"
                                 + name.getMethodName())).build());
     }
 
@@ -161,7 +159,7 @@ public class Run {
         }
         test.pass("Registration page with credentials",
                 MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.png"
+                        ("\\.jpg"
                                 + name.getMethodName())).build());
     }
 
@@ -193,7 +191,7 @@ public class Run {
 
         test.pass("Registration page with credentials",
                 MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.png"
+                        ("\\.jpg"
                                 + name.getMethodName())).build());
     }
 
@@ -226,7 +224,7 @@ public class Run {
         }
         test.pass("Registration page with credentials",
                 MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.png"
+                        ("\\.jpg"
                                 + name.getMethodName())).build());
     }
 
@@ -256,7 +254,7 @@ public class Run {
         }
         test.pass("Registration page with credentials",
                 MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.png"
+                        ("\\.jpg"
                                 + name.getMethodName())).build());
     }
 
@@ -271,6 +269,7 @@ public class Run {
             String timeNow = String.valueOf(System.currentTimeMillis());
             test.info("details", MediaEntityBuilder.
                     createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
+
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -285,7 +284,7 @@ public class Run {
         }
         test.pass("Registration page with credentials",
                 MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.png"
+                        ("\\.jpg"
                                 + name.getMethodName())).build());
     }
 
@@ -314,11 +313,17 @@ public class Run {
         }
         test.pass("Registration page with credentials",
                 MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.png"
+                        ("\\.jpg"
                                 + name.getMethodName())).build());
 
+    }
+
+
+    @Test
+    public void testPressSubmit(){
         boolean pressSubmit = false;
         try{
+            driver.get("https://buyme.co.il/supplier/1933847?budget=6&category=16&query=&region=11");
             GiftScreen.pressSubmit(driver);
             pressSubmit = true;
             String timeNow = String.valueOf(System.currentTimeMillis());
@@ -339,16 +344,10 @@ public class Run {
         driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
         test.pass("Registration page with credentials",
                 MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.png"
+                        ("\\.jpg"
                                 + name.getMethodName())).build());
 
     }
-
-
-//    @Test
-//    public void testPressSubmit(){
-//
-//    }
 
 
 
@@ -363,12 +362,12 @@ public class Run {
     private static String takeScreenShot (String ImagesPath){
         TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
         File screenShotFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
-        File destinationFile = new File(ImagesPath +".png");
+        File destinationFile = new File(ImagesPath +".jpg");
         try {
             FileUtils.copyFile(screenShotFile, destinationFile);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return ImagesPath + ".png";
+        return ImagesPath + ".jpg";
     }
 }

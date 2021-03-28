@@ -6,7 +6,7 @@ public class Registration {
     private static WebElement element = null;
 
     public static void openLink (WebDriver driver){
-        element=driver.findElement(By.partialLinkText("כניסה"));//Sign in--registration
+        element=driver.findElement(By.partialLinkText("כניסה"));//Sign in or registration
         element.click();
 
     }
@@ -32,12 +32,12 @@ public class Registration {
     }
 
     public static void registrationButton (WebDriver driver){
-        element = driver.findElement(By.cssSelector("button[gtm='הרשמה ל-BUYME']"));
+        element = driver.findElement(By.cssSelector("button[gtm='הרשמה ל-BUYME']"));//registration button
         element.click();
     }
 
     public static void pressSubmit (WebDriver driver){
-        element = driver.findElement(By.cssSelector("button[gtm='כניסה ל-BUYME']"));
+        element = driver.findElement(By.cssSelector("button[gtm='כניסה ל-BUYME']"));//submit button
         element.click();
     }
 
