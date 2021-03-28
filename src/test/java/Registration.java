@@ -11,11 +11,6 @@ public class Registration {
 
     }
 
-//    public static void signIn (WebDriver driver){
-//        element=driver.findElement(By.partialLinkText("כניסה"));//Sign in--registration
-//        element.click();
-//    }
-
     public static void enterName (WebDriver driver){
         element = driver.findElement(By.cssSelector("input[placeholder='שם פרטי']"));
         element.sendKeys("Alex Alex");//Name
