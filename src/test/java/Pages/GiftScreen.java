@@ -1,3 +1,5 @@
+package Pages;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,8 +17,7 @@ public class GiftScreen {
 
     public static void EnterAmount(WebDriver driver) {
 
-        element=driver.findElement(By.cssSelector("input[placeholder='הכנס סכום']"));
-        //element.click();
+        element=driver.findElement(By.cssSelector("input[data-parsley-type='number']"));
         element.sendKeys("500");
     }
 

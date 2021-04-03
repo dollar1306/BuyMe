@@ -1,34 +1,35 @@
+import Helper.Constants;
+import Helper.DriverSingleton;
+import Helper.TakeTheImage;
+import Helper.XMLHandler;
+import Pages.GiftScreen;
+import Pages.HomeScreen;
+import Pages.Registration;
+import Pages.SendGift;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
+
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
-import org.junit.rules.TestName;
-import org.openqa.selenium.*;
 
+import org.junit.Assert;
+
+import org.openqa.selenium.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
+
 import java.util.concurrent.TimeUnit;
-
 import static org.testng.FileAssert.fail;
+
 
 public class Run {
     private static WebDriver driver;
     private static ExtentReports extent;
     private static ExtentTest test;
-    public TestName name = new TestName();
-    //private static WebElement element = null;
+    //public TestName name = new TestName();
+
 
     @BeforeClass
     public void runBefore(){
@@ -37,25 +38,25 @@ public class Run {
         ExtentSparkReporter htmlReporter = new ExtentSparkReporter(cwd + "\\extent.html");
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
-        test = extent.createTest("Buy-Me ", "Sample description");
-        // add custom system info
+        test = extent.createTest("Buy-Me ", "Second Project");
         extent.setSystemInfo("Environment", "Production");
         extent.setSystemInfo("Tester", "Alex");
-        // log results
         test.log(Status.INFO, "@Before class");
 
         boolean driverEstablish = false;
         try {
             driver = DriverSingleton.getDriverInstance();
-            //driver.get("https://buyme.co.il/");
+            driver.get(XMLHandler.getData(Constants.OPEN_URL));   //OPEN_URL
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             driver.manage().window().maximize();
             driverEstablish = true;
+
         } catch (Exception e) {
             e.printStackTrace();
             fail("Cant connect chromeDriver");
             test.log(Status.FAIL, "Driver Connection Failed! " + e.getMessage());
             driverEstablish = false;
+
         } finally {
             if (driverEstablish) {
                 test.log(Status.PASS, "Driver established successfully");
@@ -63,29 +64,15 @@ public class Run {
         }
     }
 
-    private static String getData (String keyName) throws IOException, SAXException, ParserConfigurationException {
-        File configXmlFile = new File("src\\main\\resources\\data.xml");
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(configXmlFile);
-        if (doc != null) {
-            doc.getDocumentElement().normalize();
-        }
-        assert doc != null;
-        return doc.getElementsByTagName(keyName).item(0).getTextContent();
-    }
+
 
     @Test
     public void testOpen(){
         boolean pageOpened = false;
         try {
-            driver.navigate().to(getData("browserType"));
-            String firstWindowString = driver.getWindowHandle();
-            System.out.println("Window String: " + firstWindowString);
+            driver.navigate().to(XMLHandler.getData("browserType"));
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             pageOpened = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,11 +84,12 @@ public class Run {
                 test.log(Status.PASS, "Open webpage " + "Webpage opened successfully");
             }
         }
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.jpg"
-                                + name.getMethodName())).build());
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
     }
+
+
 
     @Test
     public void clickLink(){
@@ -109,9 +97,7 @@ public class Run {
         try {
             Registration.openLink(driver);
             openLink = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         } catch (Exception e) {
 
@@ -125,40 +111,39 @@ public class Run {
 
             }
         }
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.jpg"
-                                + name.getMethodName())).build());
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
     }
+
+
 
     @Test
     public void testSignIn(){
         boolean signIn = false;
         try {
-
+            driver.get("https://buyme.co.il/?modal=login");
             Registration.enterEmail(driver);
             Registration.enterPassword(driver);
             Registration.pressSubmit(driver);
             signIn = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         } catch (Exception e) {
 
             e.printStackTrace();
             test.log(Status.FAIL, "SignIn page was not found" + e.getMessage());
             signIn = false;
+
         } finally {
             if (signIn) {
                 test.log(Status.PASS, "SignIn page opened successfully");
 
             }
         }
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.jpg"
-                                + name.getMethodName())).build());
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
     }
 
 
@@ -166,31 +151,29 @@ public class Run {
     public void testRegistration(){
         boolean registration = false;
         try{
+            driver.get("https://buyme.co.il/?modal=login");//url for registration
             Registration.enterName(driver);
             Registration.enterEmail(driver);
             Registration.enterPassword(driver);
             Registration.enterPasswordAgain(driver);
             Registration.registrationButton(driver);
             registration = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         } catch (Exception e) {
 
             e.printStackTrace();
-            test.log(Status.FAIL, "Registration fail" + e.getMessage());
+            test.log(Status.FAIL, "Pages.Registration fail" + e.getMessage());
             registration = false;
+
         } finally {
             if (registration) {
-                test.log(Status.PASS, "Registration pass");
+                test.log(Status.PASS, "Pages.Registration pass");
             }
         }
-
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.jpg"
-                                + name.getMethodName())).build());
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
     }
 
 
@@ -207,9 +190,7 @@ public class Run {
             HomeScreen.selectType(driver);
             HomeScreen.pressSubmit(driver);
             homeScreen = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -220,24 +201,20 @@ public class Run {
                 test.log(Status.PASS , "Home screen drop down successful");
             }
         }
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.jpg"
-                                + name.getMethodName())).build());
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
     }
 
 
     @Test
     public void testAssertUrl(){
         boolean assertURL = false;
-        driver.get("https://buyme.co.il/search?budget=6&category=16&region=11");
+        driver.get("https://buyme.co.il/search?budget=6&category=16&region=11");//URL_FOR_ASSERT
         try {
-            Assert.assertEquals("https://buyme.co.il/search?budget=6&category=16&region=11",
+            Assert.assertEquals("https://buyme.co.il/search?budget=6&category=16&region=11",//EXPECTED_URL
                     driver.getCurrentUrl());
             assertURL = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
 
         } catch (Exception e) {
 
@@ -250,23 +227,20 @@ public class Run {
 
             }
         }
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.jpg"
-                                + name.getMethodName())).build());
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
     }
 
 
     @Test
     public void testSelectBusiness(){
-        driver.get("https://buyme.co.il/search?budget=6&category=16&region=11");
+        driver.get("https://buyme.co.il/search?budget=6&category=16&region=11");//SELECT_BUSINESS_URL
         boolean selectBusiness = false;
         try {
             GiftScreen.selectBusiness(driver);
             selectBusiness = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         } catch (Exception e) {
 
@@ -280,23 +254,20 @@ public class Run {
 
             }
         }
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.jpg"
-                                + name.getMethodName())).build());
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
     }
 
     @Test
-    public void testEnterAmountAndSend(){
+    public void testEnterAmount(){
 
         boolean sendAmount = false;
         try {
-            driver.get("https://buyme.co.il/supplier/1933847?budget=6&category=16&query=&region=11");
+            driver.get("https://buyme.co.il/supplier/1933847?budget=6&category=16&query=&region=11");//SEND_AMOUNT_URL
             GiftScreen.EnterAmount(driver);
             sendAmount = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         } catch (Exception e) {
 
@@ -309,11 +280,9 @@ public class Run {
 
             }
         }
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.jpg"
-                                + name.getMethodName())).build());
-
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
     }
 
 
@@ -321,12 +290,10 @@ public class Run {
     public void testPressSubmit(){
         boolean pressSubmit = false;
         try{
-            driver.get("https://buyme.co.il/supplier/1933847?budget=6&category=16&query=&region=11");
+            driver.get("https://buyme.co.il/supplier/1933847?budget=6&category=16&query=&region=11");//PRESS_SUBMIT_URL
             GiftScreen.pressSubmit(driver);
             pressSubmit = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         }catch (Exception e){
 
@@ -339,11 +306,9 @@ public class Run {
 
             }
         }
-        driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("\\.jpg"
-                                + name.getMethodName())).build());
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
 
     }
 
@@ -352,12 +317,11 @@ public class Run {
     public void testSendGift(){
         boolean selectForWho = false;
         try{
-            driver.get("https://buyme.co.il/money/1933847?price=500");
+            driver.get("https://buyme.co.il/money/1933847?price=500");//SEND_GIFT_URL
             SendGift.selectForWho(driver);
             selectForWho = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
+//            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
         }catch (Exception e){
             e.printStackTrace();
             test.log(Status.FAIL, "SELECT_FOR_WHO_FAIL" + e.getMessage());
@@ -452,12 +416,8 @@ public class Run {
 
         boolean SelectWhen = false;
         try{
-
             SendGift.SelectWhen(driver);
             SelectWhen = true;
-            String timeNow = String.valueOf(System.currentTimeMillis());
-            test.info("details", MediaEntityBuilder.
-                    createScreenCaptureFromPath(takeScreenShot(timeNow)).build());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -533,6 +493,10 @@ public class Run {
         boolean continueToPay = false;
         try{
             SendGift.continueToPay(driver);
+            Registration.enterEmail(driver);
+            Registration.enterPassword(driver);
+            Registration.pressSubmit(driver);
+            driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
             continueToPay = true;
 
         }catch (Exception e){
@@ -546,30 +510,21 @@ public class Run {
             }
         }
 
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("https://buyme.co.il/money/1933847?price=500&step=3&w=16546374")));
 
-        testSignIn();
-        test.pass("Registration page with credentials",
-                MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot
-                        ("C:\\Users\\Alex\\Desktop\\java\\proj\\BuyMe-master\\src\\main\\resources\\ForPic"
-                                + name.getMethodName())).build());
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
     }
 
     @AfterClass
     public static void close () {
+        TakeTheImage.setTest(test);
+        TakeTheImage.setDriver(driver);
+        TakeTheImage.takeTheImage();
         test.log(Status.INFO, "@After test " + "After test methods");
         //driver.quit();
         extent.flush();
-    }
-
-    private static String takeScreenShot (String ImagesPath){
-        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
-        File screenShotFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
-        File destinationFile = new File(ImagesPath +".jpg");
-        try {
-            FileUtils.copyFile(screenShotFile, destinationFile);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return ImagesPath + ".jpg";
     }
 }

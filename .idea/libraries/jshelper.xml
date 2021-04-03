@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jshelper">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/js_helper/jshelper.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

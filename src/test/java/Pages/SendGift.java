@@ -1,3 +1,4 @@
+package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,9 +15,7 @@ public class SendGift {
     }
 
     public static void enterName(WebDriver driver){
-        //element = driver.findElement(By.xpath("input[data-parsley-required-message='מי הזוכה המאושר? יש להשלים את שם המקבל/ת']"));
         element = driver.findElement(By.cssSelector("input[data-parsley-required-message='מי הזוכה המאושר? יש להשלים את שם המקבל/ת']"));
-        //element.click();
         element.sendKeys("Elena");
     }
 
@@ -32,19 +31,16 @@ public class SendGift {
     }
 
     public static void cleanAndSendBlessing(WebDriver driver) {
-//public static final By BLESSING_FIELD = By.xpath("//textarea[@rows='4']");
         element = driver.findElement(By.xpath("//textarea[@rows='4']"));
         element.clear();
-        element.sendKeys("Love you for the moon and back");
+        element.sendKeys("Love you to the moon and back");
 
     }
 
     public static void uploadImage(WebDriver driver) {
-//public static final By UPLOAD_IMAGE = By.xpath("//input[@name='fileUpload']");
         element = driver.findElement(By.cssSelector("input[type='file']"));
-        element.sendKeys("picForBuyMe.jpg");
-//public static final String MY_IMAGE = "/home/misha/Documents/SeleniumExam/happy-birthday-card.jpg";
-    }//div[gtm='עכשיו']
+        element.sendKeys("files/animal.jpg");
+    }
 
 
     public static void pressNext(WebDriver driver){
@@ -53,30 +49,20 @@ public class SendGift {
     }
 
 
-
-
-
-
-
-
-
     public static void SelectWhen(WebDriver driver) {
-//public static final By CHOOSE_WHEN = By.xpath("//label[@class='send-now']");
         element = driver.findElement(By.className("button-now"));
         element.click();
 
     }
 
     public static void howToSend(WebDriver driver) {
-
-        element = driver.findElement(By.cssSelector("svg[gtm='method-sms']"));//svg[gtm='method-sms']
+        element = driver.findElement(By.cssSelector("svg[gtm='method-sms']"));
         element.click();
 
     }
 
 
     public static void enterTelephoneFor (WebDriver driver) {
-
         element = driver.findElement(By.xpath("//input[@data-parsley-mobile='mobile']"));
         element.sendKeys("0559960996");
 
@@ -88,8 +74,6 @@ public class SendGift {
     }
 
     public static void enterTelephoneFrom (WebDriver driver) {
-//public static final By TELEPHONE_FROM = By.xpath("//input[@data-parsley-mobile='mobile']");
-        //input[placeholder='מספר נייד']
         element = driver.findElement(By.cssSelector("input[placeholder='מספר נייד']"));
         element.sendKeys("0502448568");
 
