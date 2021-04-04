@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 public class Constants {
 
     public static final String OPEN_URL = "websiteURL";
-    //public static final String IMAGES_PATH = "files/ScreenShot";
     public static final String CONFIG_XML_FILE ="src\\main\\resources\\data.xml";
 
     //Registration
@@ -43,7 +42,7 @@ public class Constants {
     public static final By SELECT_THE_BLESSING_PLACE = By.xpath("//textarea[@rows='4']");//SELECT_THE_BLESSING_PLACE
     public static final String SEND_THE_BLESSING = "Love you to the moon and back";
     public static final By SELECT_UPLOAD_IMAGE_PLACE = By.cssSelector("input[type='file']");//SELECT_UPLOAD_IMAGE_PLACE
-    public static final String SEND_THE_IMAGE = "files/animal.jpg";
+    public static final String SEND_THE_IMAGE = "C:\\Users\\Alex\\IdeaProjects\\BuyMe\\files\\That-You-Need-In-Your-Life.jpg";
     public static final By PRESS_NEXT_BUTTON = By.cssSelector("button[gtm='המשך']");//PRESS_NEXT
     public static final By SELECT_WHEN = By.className("button-now");//SELECT_WHEN
     public static final By SELECT_HOW_TO_SEND = By.cssSelector("svg[gtm='method-sms']");//SELECT_HOW_TO_SEND

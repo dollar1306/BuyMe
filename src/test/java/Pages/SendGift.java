@@ -39,8 +39,8 @@ public class SendGift {
     }
 
     public static void uploadImage(WebDriver driver) {
-        element = driver.findElement(Constants.SELECT_UPLOAD_IMAGE_PLACE);
-        element.sendKeys(Constants.SEND_THE_IMAGE);//SEND_THE_IMAGE
+        driver.findElement(Constants.SELECT_UPLOAD_IMAGE_PLACE).sendKeys(Constants.SEND_THE_IMAGE);
+
     }
 
 
