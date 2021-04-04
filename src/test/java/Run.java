@@ -28,7 +28,6 @@ public class Run {
     private static WebDriver driver;
     private static ExtentReports extent;
     private static ExtentTest test;
-    //public TestName name = new TestName();
 
 
     @BeforeClass
@@ -461,7 +460,7 @@ public class Run {
         }
         boolean nameFromHow = false;
         try{
-            SendGift.nameFromHow(driver);
+            SendGift.nameFromWho(driver);
             nameFromHow = true;
 
         }catch (Exception e){
@@ -509,10 +508,6 @@ public class Run {
                 test.log(Status.PASS, "ENTER_TELEPHONE_SUCCESSFUL");
             }
         }
-
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("https://buyme.co.il/money/1933847?price=500&step=3&w=16546374")));
-
         TakeTheImage.setTest(test);
         TakeTheImage.setDriver(driver);
         TakeTheImage.takeTheImage();

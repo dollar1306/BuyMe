@@ -12,7 +12,7 @@ import java.io.IOException;
 public class XMLHandler {
 
     public static String getData(String keyName) throws ParserConfigurationException, IOException, SAXException {
-        File configXmlFile = new File("src\\main\\resources\\data.xml");//CONFIG_XML_FILE
+        File configXmlFile = new File(Constants.CONFIG_XML_FILE);//CONFIG_XML_FILE
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(configXmlFile);

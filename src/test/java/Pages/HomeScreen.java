@@ -1,6 +1,6 @@
 package Pages;
 
-import org.openqa.selenium.By;
+import Helper.Constants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -10,40 +10,40 @@ public class HomeScreen {
 
     public static void pressPrice (WebDriver driver) {
 
-        element=driver.findElement(By.partialLinkText("סכום"));//click for link text
+        element=driver.findElement(Constants.PRESS_ON_PRICE);
         element.click();
 
     }
 
     public static void selectPrice(WebDriver driver){
-        element = driver.findElement(By.xpath("//li[@data-option-array-index='5']"));//choose price
+        element = driver.findElement(Constants.SELECT_PRICE);
         element.click();
     }
 
     public static void pressArea(WebDriver driver){
-        element=driver.findElement(By.partialLinkText("אזור"));//press place
+        element=driver.findElement(Constants.PRESS_AREA);
         element.click();
 
     }
 
     public static void selectArea(WebDriver driver){
-        element = driver.findElement(By.xpath("//li[@data-option-array-index='1']"));//choose place
+        element = driver.findElement(Constants.SELECT_AREA);
         element.click();
     }
 
     public static void pressType(WebDriver driver) {
-        element=driver.findElement(By.partialLinkText("קטגוריה"));//press type
+        element=driver.findElement(Constants.PRESS_TYPE);
         element.click();
 
     }
 
     public static void selectType(WebDriver driver){
-        element = driver.findElement(By.xpath("//li[@data-option-array-index='2']"));//choose type
+        element = driver.findElement(Constants.SELECT_TYPE);
         element.click();
     }
 
     public static void pressSubmit(WebDriver driver){
-        element=driver.findElement(By.partialLinkText("תמצאו לי מתנה"));// press submit
+        element=driver.findElement(Constants.PRESS_NEXT);
         element.click();
     }
 }
